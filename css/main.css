@@ -27,7 +27,6 @@ body {
     flex-direction: column;
     box-shadow: 1px 1px 4px;
     border: 2px dashed transparent;
-    transition: border 0.3s;
 }
 
 
@@ -39,7 +38,6 @@ body {
     flex-direction: column;
     box-shadow: 1px 1px 4px;
     border: 2px dashed transparent;
-    transition: border 0.3s;
 }
 
 
