@@ -19,35 +19,8 @@ body {
     justify-content: space-between;
 }
 
-.firstColumn {
-    background-color: yellow;
-    width: 27em;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 1px 1px 4px;
-}
-
-.secondColumn {
-    background-color: greenyellow;
-    width: 27em;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 1px 1px 4px;
-}
-
-.thirdColumn {
-    background-color: skyblue;
-    width: 27em;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 1px 1px 4px;
-}
-
-.fourthColumn {
-    background-color: purple;
+.column {
+    background-color: mediumslateblue;
     width: 27em;
     height: fit-content;
     display: flex;
