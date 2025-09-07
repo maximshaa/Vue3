@@ -1,5 +1,5 @@
 body {
-    background: #fff0dc;
+    background: lightblue;
     margin: 0;
     padding: 0;
 }
@@ -14,47 +14,66 @@ body {
 
 .columns {
     display: flex;
-    background-color: #ffc3c3;
-    width: 90%;
+    width: 95%;
     height: 90vh;
-    box-shadow: 2px 2px 4px;
+    justify-content: space-between;
 }
 
 .firstColumn {
     background-color: yellow;
-    width: 50%;
-    height: 100%;
+    width: 27em;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 4px;
 }
 
 .secondColumn {
     background-color: greenyellow;
-    width: 50%;
-    height: 100%;
+    width: 27em;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 4px;
 }
 
 .thirdColumn {
     background-color: skyblue;
-    width: 50%;
-    height: 100%;
+    width: 27em;
+    height: fit-content;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    box-shadow: 1px 1px 4px;
+}
+
+.fourthColumn {
+    background-color: purple;
+    width: 27em;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 4px;
 }
 
 .card {
-    background: #fff8ac;
-    width: 30%;
+    background: darkorange;
+    width: 90%;
     height: min-content;
     padding: 0;
     margin: 0;
-    margin-left: 2em;
-    margin-top: 2em;
+    margin-left: 1.5em;
+    margin-bottom: 2em;
     word-break: break-all;
     box-shadow: 1px 1px 4px;
 }
 
 ul {
     list-style-type: none;
+}
+
+li {
+    color: white;
+    text-shadow: 2px 2px 4px black;
 }
 
 h3 {
@@ -65,17 +84,20 @@ h3 {
 
 h4 {
     text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px black;
 }
 
 .addCard {
     display: flex;
     flex-direction: column;
-    background-color: orange;
+    background-color: coral;
     margin: 0;
+    margin-left: 0.35em;
     margin-bottom: 1em;
     padding: 1em;
     height: min-content;
-    width: 25%;
+    width: 90%;
     box-shadow: 1px 1px 4px;
 }
 
@@ -88,9 +110,4 @@ button {
 label {
     color: white;
     text-shadow: 2px 2px 4px black;
-}
-
-.importantColor {
-    color: darkred;
-    font-weight: bold;
 }
