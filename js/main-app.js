@@ -14,7 +14,7 @@ new Vue({
           </div>
           <div v-for="(card, index) in planned" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p>{{ card.description }}</p>
+            <p style="white-space: pre-line;">{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -23,11 +23,13 @@ new Vue({
             <button @click="moveCard('planned', index)">В работу</button>
           </div>
         </div>
+
+        <!-- В работе -->
         <div class="column">
           <h2>Задачи в работе</h2>
           <div v-for="(card, index) in inprogress" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p>{{ card.description }}</p>
+            <p style="white-space: pre-line;">{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -39,7 +41,7 @@ new Vue({
           <h2>Тестирование</h2>
           <div v-for="(card, index) in testing" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p>{{ card.description }}</p>
+            <p style="white-space: pre-line;">{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -52,7 +54,7 @@ new Vue({
           <h2>Выполненные задачи</h2>
           <div v-for="card in done" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p>{{ card.description }}</p>
+            <p style="white-space: pre-line;">{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -60,7 +62,6 @@ new Vue({
             <p v-if="card.status==='expired'">Просрочена</p>
           </div>
         </div>
-
       </div>
     </div>
   `,
@@ -81,15 +82,24 @@ new Vue({
                 alert('Заполните все поля!');
                 return;
             }
+
+            const deadlineDate = new Date(this.newCard.deadline);
+            const formattedDeadline = deadlineDate.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+
             this.planned.push({
                 id: Date.now(),
                 title: this.newCard.title,
                 description: this.newCard.description,
-                deadline: this.newCard.deadline,
+                deadline: formattedDeadline,
                 createdAt: new Date().toLocaleString(),
                 updatedAt: null,
                 status: null
             });
+
             this.newCard = { title: '', description: '', deadline: '' };
         },
         deleteCard(column, index) {
@@ -110,7 +120,10 @@ new Vue({
                 this.testing.push(this.inprogress.splice(index, 1)[0]);
             } else if (column === 'testing') {
                 const card = this.testing.splice(index, 1)[0];
-                const deadlineDate = new Date(card.deadline);
+
+                const [day, month, year] = card.deadline.split('.');
+                const deadlineDate = new Date(+year, +month - 1, +day);
+
                 const now = new Date();
                 if (now > deadlineDate) {
                     card.status = 'expired';
@@ -126,7 +139,7 @@ new Vue({
 
             if (!reason || reason.trim() === '') {
                 alert('Причина обязательна!');
-                this.testing.splice(index, 0, card); // возвращаем обратно в тестирование
+                this.testing.splice(index, 0, card);
                 return;
             }
 
