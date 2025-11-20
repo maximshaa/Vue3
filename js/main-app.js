@@ -6,7 +6,7 @@ new Vue({
       <div class="board">
         <div class="column">
           <h2>Запланированные задачи</h2>
-          <div class="add-form">
+          <div class="addForm">
             <input v-model="newCard.title" placeholder="Заголовок">
             <textarea v-model="newCard.description" placeholder="Описание"></textarea>
             <input type="date" v-model="newCard.deadline">
@@ -14,7 +14,7 @@ new Vue({
           </div>
           <div v-for="(card, index) in planned" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p style="white-space: pre-line;">{{ card.description }}</p>
+            <p>{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -23,13 +23,11 @@ new Vue({
             <button @click="moveCard('planned', index)">В работу</button>
           </div>
         </div>
-
-        <!-- В работе -->
         <div class="column">
           <h2>Задачи в работе</h2>
           <div v-for="(card, index) in inprogress" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p style="white-space: pre-line;">{{ card.description }}</p>
+            <p>{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -41,7 +39,7 @@ new Vue({
           <h2>Тестирование</h2>
           <div v-for="(card, index) in testing" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p style="white-space: pre-line;">{{ card.description }}</p>
+            <p>{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -54,7 +52,7 @@ new Vue({
           <h2>Выполненные задачи</h2>
           <div v-for="card in done" :key="card.id" class="card">
             <h3>{{ card.title }}</h3>
-            <p style="white-space: pre-line;">{{ card.description }}</p>
+            <p>{{ card.description }}</p>
             <p>Создано: <span>{{ card.createdAt }}</span></p>
             <p>Дэдлайн: <span>{{ card.deadline }}</span></p>
             <p v-if="card.updatedAt">Изменено: <span>{{ card.updatedAt }}</span></p>
@@ -70,6 +68,7 @@ new Vue({
         inprogress: [],
         testing: [],
         done: [],
+        idCounter: 1,
         newCard: {
             title: '',
             description: '',
@@ -91,11 +90,15 @@ new Vue({
             });
 
             this.planned.push({
-                id: Date.now(),
+                id: this.idCounter++,
                 title: this.newCard.title,
                 description: this.newCard.description,
                 deadline: formattedDeadline,
-                createdAt: new Date().toLocaleString(),
+                createdAt: new Date().toLocaleString('ru-RU',{
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }),
                 updatedAt: null,
                 status: null
             });
@@ -110,7 +113,12 @@ new Vue({
             const newDesc = prompt('Новое описание:', card.description);
             if (newDesc !== null && newDesc.trim() !== '') {
                 card.description = newDesc;
-                card.updatedAt = new Date().toLocaleString();
+                card.updatedAt = new Date().toLocaleString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+
             }
         },
         moveCard(column, index) {
